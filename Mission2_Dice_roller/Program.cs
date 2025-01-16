@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-/*
+﻿/*
  * Write a .NET console application using C# that simulates the rolling of two 6-sided dice (NOTE:
    NOT a one 12-sided die.) Use an array to keep track of the number of times that each
    combination is thrown. In other words, keep track of how many times the combination of the two
@@ -49,17 +48,28 @@ internal class Program
         // Store user input for desired rolls
         int.TryParse(Console.ReadLine(), out rollsNum);
         
-        // for the number of times user said
-             // roll die 1 and collect result
-             // roll die 2 and collect
-             // add result
-             
-        // for each number of possible to be rolled
-            // print number (2, 3, 4, 5, ...)
-            // callculate perecentage of times it was rolled
-            // pringt an asterisk fo each percent it was rolled (loop but also method exists)
-        DiceRoller.twoDieRoll(rollsNum);
+        // Create class of attempts of rolls
+        int[] rollResults = DiceRoller.twoDieRoll(rollsNum);
+        
+        // Intro message on how results are displayed
+        Console.WriteLine("DICE ROLLING SIMULATION RESULTS\n   Each \"*\" represents 1% of the total number of rolls.\n   Total number of rolls = " + rollsNum);
+        
+        // Create int array with number of times a certain sum came in the die rolls
+        int[] counts = new int[13];
+        foreach (int result in rollResults)
+        {
+            counts[result]++;
+        }
 
+        // Print histogram and calculate percentage based on number of times a sum occured from counts array
+        for (int i = 2; i <= 12; i++)
+        {
+            int percentage = (counts[i] * 100) / rollsNum;
+            Console.WriteLine($"{i}: {new string('*', percentage)}");
+        }
+        
+        // End message
+        Console.WriteLine("Thank you for using the dice throwing simulator. Goodbye!");
 
     }
 }
